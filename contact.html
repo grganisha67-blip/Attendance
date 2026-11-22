@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+
+    <link rel="stylesheet" href="contact.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+<nav>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" >About</a></li>
+            <li><a href="contact.html " class = "active">Contact</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    
+<div class="container">
+
+    <div class="contact-info">
+
+        <h2>Contact Information</h2>
+
+        <div class="info-box">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>
+                <h4>Address</h4>
+                <p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Kathmandu,Nepal" target="_blank">Kathmandu, Nepal</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+                <h4>Phone</h4>
+                <p>
+                    <a href="tel:+9779800000000">+977-9800000000</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <i class="fa-solid fa-envelope"></i>
+            <div>
+                <h4>Email</h4>
+                <p>
+                    <a href="mailto:attendance@gmail.com">attendance@gmail.com</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="contact-form">
+
+        <h2>Send Message</h2>
+
+        <form id="contactForm">
+
+            <div class="input-box">
+                <input type="text" id="name" placeholder="Your Name">
+            </div>
+
+            <div class="input-box">
+                <input type="email" id="email" placeholder="Your Email">
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="subject" placeholder="Subject">
+            </div>
+
+            <div class="input-box">
+                <textarea id="message" rows="6" placeholder="Your Message"></textarea>
+            </div>
+
+            <button type="submit">Send Message</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="contact.js"></script>
+
+</body>
+</html>

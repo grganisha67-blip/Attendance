@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <div class="login-container">
+
+        <h2>Attendance Management System</h2>
+        <h3>Login</h3>
+
+        <form id="loginForm">
+
+            <label>Select Role</label>
+            <select id="role" required>
+                <option value="">-- Select Role --</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter Email" required>
+
+            <label>Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" placeholder="Enter Password" required>
+                <span class="toggle-eye" onclick="togglePassword('password', this)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </span>
+            </div>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <p id="message"></p>
+
+        <p style="margin-top: 15px; text-align: center;">
+            Don't have an account? <a href="register.html">Register here</a>
+        </p>
+
+    </div>
+
+    <script src="login.js?v=5"></script>
+
+</body>
+</html>

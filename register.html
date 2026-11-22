@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+
+<div class="register-container">
+
+    <h2>Attendance Management System</h2>
+    <h3>User Registration</h3>
+
+    <form id="registerForm">
+
+        <label>Select Role</label>
+        <select id="role" onchange="handleRoleChange()" required>
+            <option value="">-- Select Role --</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <!-- Teacher ra Admin chhanda matra dekhine box -->
+        <div id="secretCodeBox" style="display: none;">
+            <label>Secret Verification Code</label>
+            <div class="password-wrapper">
+                <input type="password" id="secretCode" placeholder="Enter College Secret Code">
+                <span class="toggle-eye" onclick="togglePassword('secretCode', this)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </span>
+            </div>
+        </div>
+
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Enter Full Name" required>
+
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter Email" required>
+
+        <!-- Student chhanda matra dekhine box -->
+        <div id="studentFields">
+            <label>Faculty</label>
+            <select id="faculty">
+                <option value="">Select Faculty</option>
+                <option>BCA</option>
+                <option>BBS</option>
+                <option>BIT</option>
+                <option>BIM</option>
+                <option>BSc CSIT</option>
+            </select>
+
+            <label>Semester</label>
+            <select id="semester">
+                <option value="">Select Semester</option>
+                <option>1st Semester</option>
+                <option>2nd Semester</option>
+                <option>3rd Semester</option>
+                <option>4th Semester</option>
+                <option>5th Semester</option>
+                <option>6th Semester</option>
+                <option>7th Semester</option>
+                <option>8th Semester</option>
+            </select>
+        </div>
+
+        <label>Password</label>
+        <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Enter Password" required>
+            <span class="toggle-eye" onclick="togglePassword('password', this)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </span>
+        </div>
+
+        <label>Confirm Password</label>
+        <div class="password-wrapper">
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            <span class="toggle-eye" onclick="togglePassword('confirmPassword', this)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </span>
+        </div>
+
+        <button type="submit">Register</button>
+
+    </form>
+
+    <p id="message"></p>
+
+    <p style="margin-top: 15px; text-align: center;">
+        Already have an account? <a href="login.html">Login here</a>
+    </p>
+
+</div>
+
+<script src="register.js?v=8"></script>
+
+</body>
+</html>

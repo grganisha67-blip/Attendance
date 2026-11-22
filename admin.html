@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Management System</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <h1>Student Attendance System</h1>
+        <div class="topbar-actions">
+            <a href="profile.html" class="btn-profile">👤 My Profile</a>
+        </div>
+    </header>
+
+    <div class="app">
+
+        <aside class="sidebar">
+            <div>
+                <h2>College Admin</h2>
+                <nav>
+                    <button class="active" onclick="showPage('programs', this)">▦ Programs</button>
+                    <button onclick="showPage('semesters', this)">▣ Semesters</button>
+                    <button onclick="showPage('subjects', this)">▤ Subjects</button>
+                    <button onclick="showPage('faculty', this)">♙ Faculty</button>
+                    <button onclick="showPage('students', this)">♧ Students</button>
+                    <button onclick="showPage('ledger', this)">▣ Ledger</button>
+                </nav>
+            </div>
+
+            <div class="sidebar-bottom">
+                <button type="button" class="btn-logout" onclick="logout()">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main">
+
+            <section id="programs" class="page show">
+                <h1>Program Management</h1>
+                <div class="panel">
+                    <h2>Add New Program</h2>
+                    <form id="programForm">
+                        <div class="field">
+                            <label>Program Name</label>
+                            <select id="programName" required>
+                                <option value="">-- Select Program --</option>
+                                <option value="BBA">BBA</option>
+                                <option value="BIT">BIT</option>
+                                <option value="BALLB">BALLB</option>
+                                <option value="BIM">BIM</option>
+                                <option value="Pharmacy">Pharmacy</option>
+                                <option value="BCA">BCA</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Program Duration</label>
+                            <select id="programDuration" required>
+                                <option value="">-- Select Duration --</option>
+                                <option value="1 Year">1 Year</option>
+                                <option value="2 Years">2 Years</option>
+                                <option value="3 Years">3 Years</option>
+                                <option value="4 Years">4 Years</option>
+                            </select>
+                        </div>
+                        <button type="submit">Add Program</button>
+                    </form>
+                </div>
+                <div class="panel">
+                    <h2>Existing Programs</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Program Name</th>
+                                <th>Duration</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="programTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="semesters" class="page">
+                <h1>Semester Management</h1>
+                <div class="panel">
+                    <h2>Add New Semester</h2>
+                    <form id="semesterForm">
+                        <div class="field">
+                            <label>Select Program</label>
+                            <select id="semesterProgram" required></select>
+                        </div>
+                        <div class="field">
+                            <label>Semester Name</label>
+                            <input type="text" id="semesterName" placeholder="e.g., 3rd Semester" required>
+                        </div>
+                        <div class="field">
+                            <label>Start Date</label>
+                            <input type="date" id="startDate" required>
+                        </div>
+                        <div class="field">
+                            <label>End Date</label>
+                            <input type="date" id="endDate" required>
+                        </div>
+                        <label class="check">
+                            <input type="checkbox" id="semesterActive" checked>
+                            Currently Active
+                        </label>
+                        <button type="submit">Save Semester</button>
+                    </form>
+                </div>
+                <div class="panel">
+                    <h2>Existing Semesters</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Program</th>
+                                <th>Semester Name</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="semesterTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="subjects" class="page">
+                <h1>Subject Management</h1>
+                <div class="panel">
+                    <h2>Add New Subject</h2>
+                    <form id="subjectForm">
+                        <div class="field">
+                            <label>Select Program</label>
+                            <select id="subjectProgram" required></select>
+                        </div>
+                        <div class="field">
+                            <label>Select Semester</label>
+                            <select id="subjectSemester" required></select>
+                        </div>
+                        <div class="field">
+                            <label>Subject Name</label>
+                            <input type="text" id="subjectName" placeholder="Subject Name" required>
+                        </div>
+                        <button type="submit">Add Subject</button>
+                    </form>
+                </div>
+                <div class="panel">
+                    <h2>Existing Subjects</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Subject Name</th>
+                                <th>Program</th>
+                                <th>Semester</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subjectTable"></tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="faculty" class="page">
+                <h1>Faculty Management</h1>
+                <div class="panel">
+                    <h2>Add New Faculty</h2>
+                    <form id="facultyForm">
+                        <div class="field">
+                            <label>Full Name</label>
+                            <input type="text" id="facultyName" required>
+                        </div>
+                        <div class="field">
+                            <label>Phone No</label>
+                            <input type="text" id="facultyPhone" maxlength="10" pattern="[0-9]{10}"
+                                placeholder="10-digit Phone Number"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                        </div>
+                        <div class="field">
+                            <label>Email ID</label>
+                            <input type="email" id="facultyEmail" required>
+                        </div>
+                        <button type="submit">Add Faculty</button>
+                    </form>
+                </div>
+                <div class="panel">
+                    <h2>Existing Faculty</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Phone No</th>
+                                <th>Email ID</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="facultyTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="students" class="page">
+                <h1>Student Management</h1>
+                <div class="panel">
+                    <h2>Add New Student</h2>
+                    <form id="studentForm">
+                        <input type="hidden" id="editStudentId">
+                        <div class="field">
+                            <label>Student Name</label>
+                            <input type="text" id="studentName" required>
+                        </div>
+                        <div class="field">
+                            <label>Roll No</label>
+                            <input type="text" id="rollNo" required>
+                        </div>
+                        <div class="field">
+                            <label>Current Semester</label>
+                            <select id="studentSemester" required></select>
+                        </div>
+                        <button type="submit" id="studentSubmitBtn">Add Student</button>
+                        <button type="button" id="studentCancelBtn" onclick="cancelStudentEdit()">Cancel</button>
+                    </form>
+
+                </div>
+                <div class="panel">
+                    <h2>Existing Students</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student Name</th>
+                                <th>Roll No</th>
+                                <th>Current Semester</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="ledger" class="page">
+                <h1>Ledger Management</h1>
+                <div class="panel">
+                    <h2>Assign Ledger</h2>
+                    <form id="ledgerForm">
+                        <input type="hidden" id="editLedgerId">
+                        <div class="field">
+                            <label>Select Subject</label>
+                            <select id="ledgerSubject" required></select>
+                        </div>
+                        <div class="field">
+                            <label>Select Faculty</label>
+                            <select id="ledgerFaculty" required></select>
+                        </div>
+                        <div class="field">
+                            <label>Select Students</label>
+                            <div id="ledgerStudents" class="checkbox-list">
+                                <p class="muted-text">Loading students...</p>
+                            </div>
+                        </div>
+                        <button type="submit" id="ledgerSubmitBtn">Create Ledger</button>
+                        <button type="button" id="ledgerCancelBtn" class="btn-cancel"
+                            onclick="cancelLedgerEdit()">Cancel</button>
+
+                    </form>
+
+                </div>
+                <div class="panel">
+                    <h2>Existing Ledgers</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ledger ID</th>
+                                <th>Subject</th>
+                                <th>Faculty</th>
+                                <th>Total Students</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ledgerTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="profileModal" class="profile-modal">
+        <div class="profile-box">
+            <h2>My Profile</h2>
+            <div id="profileContent" class="profile-details">Loading...</div>
+            <button type="button" class="btn-close-profile" onclick="closeProfile()">Close</button>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

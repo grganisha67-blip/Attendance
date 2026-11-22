@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Attendance System</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <h1>Student Attendance System</h1>
+        <div class="topbar-actions">
+            <button type="button" class="btn-back" onclick="goBack()">← Back to Dashboard</button>
+            <button type="button" class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="avatar-circle" id="avatarLetter">U</div>
+            <h2 id="userName">Loading...</h2>
+            <span class="role-badge" id="userRole">ROLE</span>
+
+            <div class="info-list" id="profileInfo">
+                <p>Loading details...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

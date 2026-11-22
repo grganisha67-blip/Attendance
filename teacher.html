@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal - Attendance System</title>
+    <link rel="stylesheet" href="teacher.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <h1>Student Attendance System</h1>
+        <div class="topbar-actions">
+            <a href="profile.html" class="btn-profile">👤 My Profile</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div>
+                <div class="logo">Teacher Panel</div>
+                <ul class="menu-list">
+                    <li class="menu-item active" onclick="openTeacherTab('my-ledgers', this)">My Ledgers</li>
+                    <li class="menu-item" onclick="openTeacherTab('attendance-area', this)">Take Attendance</li>
+                    <li class="menu-item" onclick="openTeacherTab('report-area', this)">Generate Report</li>
+                </ul>
+            </div>
+
+            <!-- Logout लाई बायाँ मेनुको सबैभन्दा तल राखिएको -->
+            <div class="sidebar-bottom">
+                <button type="button" class="btn-logout" onclick="logout()">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <div id="my-ledgers" class="section active">
+                <h1>My Ledgers</h1>
+                <p class="subtitle">Click on a subject card to take or edit attendance.</p>
+
+                <div class="card-grid" id="teacher-ledgers-grid">
+                    <p>Loading your assigned ledgers...</p>
+                </div>
+
+
+            </div>
+
+            <div id="attendance-area" class="section">
+                <h1 id="selected-subject-title">Database Management - BCA 3rd Sem</h1>
+
+                <div class="tab-buttons">
+                    <button type="button" class="btn-primary" onclick="switchAttendanceMode('take')">Take
+                        Attendance</button>
+                    <button type="button" class="btn-outline" onclick="switchAttendanceMode('edit')">Edit
+                        Attendance</button>
+                    <button type="button" class="btn-outline"
+                        onclick="openTeacherTab('report-area', document.querySelectorAll('.menu-item')[2])">Generate
+                        Report</button>
+                </div>
+
+                <div class="card">
+                    <h2 id="mode-heading">Take Daily Attendance</h2>
+                    <form id="attendanceForm">
+                        <div class="form-group">
+                            <label>Select Date</label>
+                            <input type="date" id="att-date" required>
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Roll No</th>
+                                    <th>Student Name</th>
+                                    <th>Attendance Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="student-list-body">
+                            </tbody>
+                        </table>
+
+                        <br>
+                        <button type="submit" class="btn-primary">Submit Attendance</button>
+                    </form>
+                </div>
+            </div>
+
+                        <div id="report-area" class="section">
+                <div class="report-header">
+                    <h1>Attendance Report</h1>
+                    <button type="button" class="btn-pdf" onclick="downloadTeacherPDF()">📄 Download PDF Report</button>
+                </div>
+                <div class="card">
+                    <h2>Subject-wise Student Summary</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Roll No</th>
+                                <th>Student Name</th>
+                                <th>Total Classes</th>
+                                <th>Present</th>
+                                <th>Absent</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody id="report-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </main>
+    </div>
+
+    <div id="profileModal" class="profile-modal">
+        <div class="profile-box">
+            <h2>My Profile</h2>
+            <div id="profileContent" class="profile-details">Loading...</div>
+            <button type="button" class="btn-close-profile" onclick="closeProfile()">Close</button>
+        </div>
+    </div>
+
+    <script src="teacher.js"></script>
+</body>
+
+</html>
