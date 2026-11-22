@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 22, 2026 at 04:42 AM
+-- Generation Time: Nov 22, 2026 at 02:48 PM
 -- Server version: 8.4.7
 -- PHP Version: 8.3.28
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `attendance` (
   `status` enum('Present','Absent','Late') COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `student_id` (`student_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `attendance`
@@ -71,7 +71,9 @@ INSERT INTO `attendance` (`id`, `student_id`, `teacher_id`, `subject`, `date`, `
 (1, 4, 13, 'Database Management', '2026-11-21', 'Present'),
 (2, 5, 13, 'Database Management', '2026-11-21', 'Absent'),
 (3, 4, 13, 'Database Management', '2026-11-22', 'Present'),
-(4, 5, 13, 'Database Management', '2026-11-22', 'Present');
+(4, 5, 13, 'Database Management', '2026-11-22', 'Present'),
+(5, 5, 13, 'OOP', '2026-11-22', 'Absent'),
+(6, 1, 13, 'Database Management', '2026-11-22', 'Present');
 
 -- --------------------------------------------------------
 
@@ -127,14 +129,15 @@ CREATE TABLE IF NOT EXISTS `ledgers` (
   PRIMARY KEY (`id`),
   KEY `subjectId` (`subjectId`),
   KEY `facultyId` (`facultyId`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ledgers`
 --
 
 INSERT INTO `ledgers` (`id`, `subjectId`, `facultyId`, `studentIds`) VALUES
-(8, 6, 4, '[5]');
+(8, 6, 4, '[5]'),
+(10, 8, 4, '[5]');
 
 -- --------------------------------------------------------
 
@@ -198,14 +201,15 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   PRIMARY KEY (`id`),
   KEY `programId` (`programId`),
   KEY `semesterId` (`semesterId`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `programId`, `semesterId`, `name`) VALUES
-(6, 5, 5, 'Database Management');
+(6, 5, 5, 'Database Management'),
+(8, 5, 5, 'OOP');
 
 -- --------------------------------------------------------
 

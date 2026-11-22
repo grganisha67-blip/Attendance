@@ -1,3 +1,23 @@
+window.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const roleFromUrl = urlParams.get("role");
+
+    if (roleFromUrl) {
+        const roleSelect = document.getElementById("role");
+        const roleLabel = document.getElementById("role-label");
+        const subtitle = document.getElementById("login-subtitle");
+
+        roleSelect.value = roleFromUrl;           
+        roleSelect.style.display = "none";        
+        if (roleLabel) roleLabel.style.display = "none"; 
+
+        if (subtitle) {
+            subtitle.innerText = roleFromUrl.charAt(0).toUpperCase() + roleFromUrl.slice(1) + " Login";
+        }
+    }
+});
+
+
 function togglePassword(inputId, iconElement) {
     const input = document.getElementById(inputId);
     const eyeOpen = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;

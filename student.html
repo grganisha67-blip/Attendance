@@ -13,21 +13,21 @@
     <header class="topbar">
         <h1>Student Attendance System</h1>
         <div class="topbar-actions">
-            <a href="profile.html" class="btn-profile">👤 My Profile</a>
+           <a href="profile.html" class="btn-profile">&#128100; My Profile</a>
         </div>
     </header>
 
     <div class="container">
         <aside class="sidebar">
             <div>
-                <div class="logo">Student Portal</div>
+                <div class="logo">Student </div>
                 <ul class="menu-list">
                     <li class="menu-item active" onclick="openStudentTab('summary-tab', this)">View My Attendance</li>
                     <li class="menu-item" onclick="openStudentTab('all-subjects-tab', this)">View by All Subjects</li>
                 </ul>
             </div>
 
-            <!-- Logout लाई बायाँ मेनुको सबैभन्दा तल राखिएको -->
+         
             <div class="sidebar-bottom">
                 <button type="button" class="btn-logout" onclick="logout()">Logout</button>
             </div>
@@ -50,7 +50,7 @@
                 <div id="subject-detail-box" class="card" style="display: none;">
                     <div class="card-header">
                         <h2 id="detail-subject-title">Subject Attendance History</h2>
-                        <button type="button" class="btn-close" onclick="closeSubjectDetails()">Close ✕</button>
+                       <button type="button" class="btn-close" onclick="closeSubjectDetails()">Close &times;</button>
                     </div>
                     <table id="subject-detail-table">
                         <thead>
@@ -66,14 +66,12 @@
                 </div>
             </div>
 
-            <!-- २. VIEW BY ALL SUBJECTS -->
             <div id="all-subjects-tab" class="section">
                 <h1>View by All Subjects</h1>
                 <div class="card">
                     <div class="report-header">
                         <h2>All Subjects Daily Attendance</h2>
-                        <button type="button" class="btn-pdf" onclick="downloadStudentPDF()">📄 Download PDF
-                            Report</button>
+                        <button type="button" class="btn-pdf" onclick="downloadStudentPDF()">&#128196; Download PDF Report</button>
                     </div>
                     <table>
                         <thead>

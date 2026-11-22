@@ -9,12 +9,10 @@ let currentFaculty = "";
 let currentSemester = "";
 let attendanceMode = "take";
 
-// Page load huda aaja ko date set garne ra teacher ko ledgers load garne
 window.addEventListener("DOMContentLoaded", () => {
     const dateInput = document.getElementById("att-date");
     dateInput.valueAsDate = new Date();
 
-    // Date change garda tyo din ko purano attendance auto-load garne
     dateInput.addEventListener("change", () => {
         if (currentLedgerId) loadStudents(currentLedgerId);
     });
@@ -22,7 +20,7 @@ window.addEventListener("DOMContentLoaded", () => {
     loadTeacherLedgers();
 });
 
-// 1. Admin le assign gareko Ledgers load garne
+// 1. Admin le assign gareko Ledgers load garne (+ Edit Subject button)
 async function loadTeacherLedgers() {
     const userId = localStorage.getItem("user_id");
     const grid = document.getElementById("teacher-ledgers-grid");
@@ -43,12 +41,19 @@ async function loadTeacherLedgers() {
 
         grid.innerHTML = "";
         ledgers.forEach(l => {
+            const safeSub = l.subject_name.replace(/'/g, "\\'");
+            const safeProg = l.program_name.replace(/'/g, "\\'");
+            const safeSem = l.semester_name.replace(/'/g, "\\'");
+
             grid.innerHTML += `
-                <div class="ledger-card" onclick="openLedger(${l.ledger_id}, '${l.subject_name.replace(/'/g, "\\'")}', '${l.program_name.replace(/'/g, "\\'")}', '${l.semester_name.replace(/'/g, "\\'")}')">
+                <div class="ledger-card" onclick="openLedger(${l.ledger_id}, '${safeSub}', '${safeProg}', '${safeSem}')">
                     <h3>${l.subject_name}</h3>
                     <p>Program: ${l.program_name} | ${l.semester_name}</p>
                     <p>Total Students: ${l.studentIds.length}</p>
-                    <span class="badge-present">Click to Open</span>
+                    <div style="display:flex; gap:8px; margin-top:10px; align-items:center;">
+                        <span class="badge-present">Click to Open</span>
+                        <button type="button" onclick="event.stopPropagation(); editTeacherSubject('${safeSub}')" style="padding:4px 10px; font-size:12px; background:#f59e0b; color:#fff; border:none; border-radius:4px; cursor:pointer;">Edit Subject</button>
+                    </div>
                 </div>
             `;
         });
@@ -83,21 +88,34 @@ function openLedger(ledgerId, subject, faculty, semester) {
     loadStudents(ledgerId);
     loadReport();
 
-    let attendanceMenu = document.querySelectorAll('.menu-item')[1];
+    let attendanceMenu = document.querySelectorAll('.menu-item');
     openTeacherTab('attendance-area', attendanceMenu);
 }
 
 // 4. Take vs Edit Attendance mode switch garne
 function switchAttendanceMode(mode) {
     attendanceMode = mode;
-    let heading = document.getElementById('mode-heading');
-    if (heading) {
-        heading.innerText = mode === 'edit' 
-            ? 'Edit Attendance (Select Date to Modify)' 
-            : 'Take Daily Attendance';
+    const takeBtn = document.getElementById('btn-take');
+    const editBtn = document.getElementById('btn-edit');
+    if (takeBtn && editBtn) {
+        takeBtn.className = (mode === 'take') ? 'btn-primary' : 'btn-outline';
+        editBtn.className = (mode === 'edit') ? 'btn-primary' : 'btn-outline';
     }
+
+    const heading = document.getElementById('mode-heading');
+    const submitBtn = document.querySelector('#attendanceForm button[type="submit"]');
+
+    if (mode === 'edit') {
+        if (heading) heading.innerText = 'Edit Attendance (Select Date to Modify)';
+        if (submitBtn) submitBtn.innerText = 'Update Attendance';
+    } else {
+        if (heading) heading.innerText = 'Take Daily Attendance';
+        if (submitBtn) submitBtn.innerText = 'Submit Attendance';
+    }
+
     if (currentLedgerId) loadStudents(currentLedgerId);
 }
+
 
 // 5. Ledger ma assign vayeka students ra selected date ko saved attendance tanne
 async function loadStudents(ledgerId) {
@@ -138,7 +156,6 @@ async function loadStudents(ledgerId) {
         tbody.innerHTML = `<tr><td colspan='3'>Error loading students.</td></tr>`;
     }
 }
-
 // 6. Attendance Submit / Update garne
 document.getElementById("attendanceForm").addEventListener("submit", async function(e) {
     e.preventDefault();
@@ -156,7 +173,7 @@ document.getElementById("attendanceForm").addEventListener("submit", async funct
     rows.forEach(row => {
         const radio = row.querySelector("input[type='radio']:checked");
         if (radio) {
-            const student_id = radio.name.split("_")[1];
+            const student_id = radio.name.split("_");
             records.push({ student_id: student_id, status: radio.value });
         }
     });
@@ -181,7 +198,30 @@ document.getElementById("attendanceForm").addEventListener("submit", async funct
     }
 });
 
-// 7. Subject-wise Report dekhaune
+// 7. Teacher le Subject ko naam matra sachyaune function
+async function editTeacherSubject(oldName) {
+    const newName = prompt("Edit Subject Name:", oldName);
+    if (!newName || newName.trim() === "" || newName.trim() === oldName) return;
+
+    try {
+        const res = await fetch("backend/teacher_edit.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                action: "edit_subject",
+                old_name: oldName,
+                new_name: newName.trim()
+            })
+        });
+        const data = await res.json();
+        alert(data.message);
+        loadTeacherLedgers();
+    } catch (err) {
+        alert("Error updating subject.");
+    }
+}
+
+// 8. Subject-wise Report load garne
 async function loadReport() {
     if (!currentLedgerId) return;
     const tbody = document.getElementById("report-body");
@@ -209,7 +249,7 @@ async function loadReport() {
     }
 }
 
-// 8. Profile Modal & Logout
+// 9. Profile Modal, Logout & PDF Download
 async function openProfile() {
     const userId = localStorage.getItem("user_id");
     if (!userId) return alert("Please login first!");

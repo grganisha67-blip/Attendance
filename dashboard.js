@@ -7,17 +7,21 @@ document.addEventListener("DOMContentLoaded", function () {
             const savedRole = localStorage.getItem("user_role");
             const targetPage = this.getAttribute("href");
 
+            let clickedRole = "";
+            if (targetPage.includes("admin")) clickedRole = "admin";
+            else if (targetPage.includes("teacher")) clickedRole = "teacher";
+            else if (targetPage.includes("student")) clickedRole = "student";
+
             if (!savedRole) {
                 event.preventDefault();
-                alert("Please login first!");
-                window.location.href = "login.html";
+                window.location.href = `login.html?role=${clickedRole}`;
                 return;
             }
 
             if (
-                (targetPage === "admin.html" && savedRole !== "admin") ||
-                (targetPage === "teacher.html" && savedRole !== "teacher") ||
-                (targetPage === "student.html" && savedRole !== "student")
+                (clickedRole === "admin" && savedRole !== "admin") ||
+                (clickedRole === "teacher" && savedRole !== "teacher") ||
+                (clickedRole === "student" && savedRole !== "student")
             ) {
                 event.preventDefault();
                 alert("Access Denied! You are logged in as " + savedRole.toUpperCase());
@@ -25,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // 2. Logout Button (yadi page ma #logout id xa bhane)
+    // 2. Logout Button
     const logoutBtn = document.getElementById("logout");
     if (logoutBtn) {
         logoutBtn.onclick = function (event) {

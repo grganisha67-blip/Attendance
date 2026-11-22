@@ -49,7 +49,7 @@ body {
 .logo {
     font-size: 20px;
     font-weight: bold;
-    color: #2563eb;
+    color: #0b0b0c;
     margin-bottom: 30px;
     padding-left: 10px;
 }
@@ -374,4 +374,11 @@ th {
 
 .btn-pdf:hover {
     background-color: #b91c1c;
+}
+
+.tab-buttons button:focus {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border-color: #2563eb !important;
+    outline: none;
 }

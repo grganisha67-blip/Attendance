@@ -57,7 +57,48 @@ const getSubject = id => subjects.find(s => s.id == id)?.name || "-";
 const getFaculty = id => faculty.find(f => f.id == id)?.name || "-";
 
 function actions(type, id) {
-    return `<button type="button" class="action-btn" onclick="editData('${type}', ${id})">✎</button> <button type="button" class="action-btn delete-btn" onclick="deleteData('${type}', ${id})">🗑</button>`;
+    return `<button type="button" class="action-btn" onclick="editData('${type}', ${id})">Edit</button> <button type="button" class="action-btn delete-btn" onclick="deleteData('${type}', ${id})">Delete</button>`;
+}
+
+function filterLedgerStudents() {
+    const ledgerBox = $("ledgerStudents");
+    const ledgerSubSelect = $("ledgerSubject");
+    if (!ledgerBox) return;
+
+    const selectedSubId = ledgerSubSelect ? ledgerSubSelect.value : "";
+
+    if (!selectedSubId) {
+        ledgerBox.innerHTML = `<p style="color:#64748b;margin:0;font-size:13px;">Please select a subject first</p>`;
+        return;
+    }
+
+    const selectedSub = subjects.find(sub => sub.id == selectedSubId);
+    const filtered = selectedSub ? students.filter(st => st.semesterId == selectedSub.semesterId) : [];
+
+    if (filtered.length === 0) {
+        ledgerBox.innerHTML = `<p style="color:#ef4444;margin:0;font-size:13px;">No students found in this semester.</p>`;
+    } else {
+        const selectAllHtml = `
+            <label style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #cbd5e1;cursor:pointer;font-weight:bold;color:#2563eb;">
+                <input type="checkbox" onchange="toggleAllLedgerStudents(this)" style="width:auto;margin:0;">
+                <span>Select All Students</span>
+            </label>
+        `;
+        const studentsHtml = filtered.map(s => `
+            <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;">
+                <input type="checkbox" class="ledger-student-cb" value="${s.id}" style="width:auto;margin:0;">
+                <span>${s.name} (${s.roll}) - ${getSemester(s.semesterId)}</span>
+            </label>
+        `).join("");
+
+        ledgerBox.innerHTML = selectAllHtml + studentsHtml;
+    }
+}
+
+function toggleAllLedgerStudents(source) {
+    document.querySelectorAll(".ledger-student-cb").forEach(cb => {
+        cb.checked = source.checked;
+    });
 }
 
 function displayData() {
@@ -65,14 +106,13 @@ function displayData() {
     fillSelect("subjectProgram", programs, p => p.name);
     fillSelect("subjectSemester", semesters, s => getProgram(s.programId) + " - " + s.name);
     fillSelect("studentSemester", semesters, s => getProgram(s.programId) + " - " + s.name);
-    fillSelect("ledgerSubject", subjects, s => s.name);
+    fillSelect("ledgerSubject", subjects, s => `${s.name} (${getProgram(s.programId)} - ${getSemester(s.semesterId)})`);
     fillSelect("ledgerFaculty", faculty, f => f.name);
 
-    const ledgerBox = $("ledgerStudents");
-    if (ledgerBox) {
-        ledgerBox.innerHTML = students.length === 0
-            ? `<p style="color:#64748b;margin:0;">No students added yet.</p>`
-            : students.map(s => `<label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer;"><input type="checkbox" class="ledger-student-cb" value="${s.id}" style="width:auto;margin:0;"><span>${s.name} (${s.roll})</span></label>`).join("");
+    const ledgerSubSelect = $("ledgerSubject");
+    if (ledgerSubSelect) {
+        ledgerSubSelect.onchange = filterLedgerStudents;
+        filterLedgerStudents();
     }
 
     $("programTable").innerHTML = programs.map(p => `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.duration}</td><td>${actions("programs", p.id)}</td></tr>`).join("");
@@ -80,7 +120,11 @@ function displayData() {
     $("subjectTable").innerHTML = subjects.map(s => `<tr><td>${s.id}</td><td>${s.name}</td><td>${getProgram(s.programId)}</td><td>${getSemester(s.semesterId)}</td><td>${actions("subjects", s.id)}</td></tr>`).join("");
     $("facultyTable").innerHTML = faculty.map(f => `<tr><td>${f.id}</td><td>${f.name}</td><td>${f.phone}</td><td>${f.email}</td><td>${actions("faculty", f.id)}</td></tr>`).join("");
     $("studentTable").innerHTML = students.map(s => `<tr><td>${s.id}</td><td>${s.name}</td><td>${s.roll}</td><td>${getSemester(s.semesterId)}</td><td>${actions("students", s.id)}</td></tr>`).join("");
-    $("ledgerTable").innerHTML = ledgers.map(l => `<tr><td>${l.id}</td><td>${getSubject(l.subjectId)}</td><td>${getFaculty(l.facultyId)}</td><td>${l.studentIds.length}</td><td>${actions("ledgers", l.id)}</td></tr>`).join("");
+    $("ledgerTable").innerHTML = ledgers.map(l => {
+        const sub = subjects.find(s => s.id == l.subjectId);
+        const subDisplay = sub ? `${sub.name} (${getSemester(sub.semesterId)})` : "-";
+        return `<tr><td>${l.id}</td><td>${subDisplay}</td><td>${getFaculty(l.facultyId)}</td><td>${l.studentIds.length}</td><td>${actions("ledgers", l.id)}</td></tr>`;
+    }).join("");
 }
 $("programForm").addEventListener("submit", async function(e) {
     e.preventDefault();
@@ -111,7 +155,6 @@ $("facultyForm").addEventListener("submit", async function(e) {
     this.reset();
 });
 
-
 $("studentForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const editId = $("editStudentId") ? $("editStudentId").value : "";
@@ -133,7 +176,6 @@ function cancelStudentEdit() {
     if ($("studentCancelBtn")) $("studentCancelBtn").style.display = "none";
 }
 
-
 $("ledgerForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const editId = $("editLedgerId") ? $("editLedgerId").value : "";
@@ -149,7 +191,7 @@ function cancelLedgerEdit() {
     if ($("editLedgerId")) $("editLedgerId").value = "";
     if ($("ledgerSubmitBtn")) $("ledgerSubmitBtn").innerText = "Create Ledger";
     if ($("ledgerCancelBtn")) $("ledgerCancelBtn").style.display = "none";
-    document.querySelectorAll(".ledger-student-cb").forEach(cb => cb.checked = false);
+    filterLedgerStudents();
 }
 
 async function editData(type, id) {
@@ -167,7 +209,10 @@ async function editData(type, id) {
         if ($("editLedgerId")) $("editLedgerId").value = item.id;
         $("ledgerSubject").value = item.subjectId;
         $("ledgerFaculty").value = item.facultyId;
-        document.querySelectorAll(".ledger-student-cb").forEach(cb => { cb.checked = item.studentIds.includes(Number(cb.value)); });
+        filterLedgerStudents();
+        document.querySelectorAll(".ledger-student-cb").forEach(cb => {
+            cb.checked = item.studentIds.includes(Number(cb.value));
+        });
         if ($("ledgerSubmitBtn")) $("ledgerSubmitBtn").innerText = "Update Ledger";
         if ($("ledgerCancelBtn")) $("ledgerCancelBtn").style.display = "inline-block";
         $("ledgerForm").scrollIntoView({ behavior: "smooth" });

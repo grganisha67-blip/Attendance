@@ -13,14 +13,14 @@
     <header class="topbar">
         <h1>Student Attendance System</h1>
         <div class="topbar-actions">
-            <a href="profile.html" class="btn-profile">👤 My Profile</a>
+            <a href="profile.html" class="btn-profile">&#128100; My Profile</a>
         </div>
     </header>
 
     <div class="container">
         <aside class="sidebar">
             <div>
-                <div class="logo">Teacher Panel</div>
+                <div class="logo">Teacher </div>
                 <ul class="menu-list">
                     <li class="menu-item active" onclick="openTeacherTab('my-ledgers', this)">My Ledgers</li>
                     <li class="menu-item" onclick="openTeacherTab('attendance-area', this)">Take Attendance</li>
@@ -28,7 +28,7 @@
                 </ul>
             </div>
 
-            <!-- Logout लाई बायाँ मेनुको सबैभन्दा तल राखिएको -->
+
             <div class="sidebar-bottom">
                 <button type="button" class="btn-logout" onclick="logout()">Logout</button>
             </div>
@@ -51,14 +51,15 @@
                 <h1 id="selected-subject-title">Database Management - BCA 3rd Sem</h1>
 
                 <div class="tab-buttons">
-                    <button type="button" class="btn-primary" onclick="switchAttendanceMode('take')">Take
-                        Attendance</button>
-                    <button type="button" class="btn-outline" onclick="switchAttendanceMode('edit')">Edit
-                        Attendance</button>
-                    <button type="button" class="btn-outline"
-                        onclick="openTeacherTab('report-area', document.querySelectorAll('.menu-item')[2])">Generate
-                        Report</button>
+                    <div class="tab-buttons">
+                        <button type="button" class="btn-outline" onclick="switchAttendanceMode('take')">Take
+                            Attendance</button>
+                        <button type="button" class="btn-outline" onclick="switchAttendanceMode('edit')">Edit
+                            Attendance</button>
+                    </div>
+
                 </div>
+
 
                 <div class="card">
                     <h2 id="mode-heading">Take Daily Attendance</h2>
@@ -87,10 +88,11 @@
                 </div>
             </div>
 
-                        <div id="report-area" class="section">
+            <div id="report-area" class="section">
                 <div class="report-header">
                     <h1>Attendance Report</h1>
-                    <button type="button" class="btn-pdf" onclick="downloadTeacherPDF()">📄 Download PDF Report</button>
+                    <button type="button" class="btn-pdf" onclick="downloadTeacherPDF()">&#128196; Download PDF
+                        Report</button>
                 </div>
                 <div class="card">
                     <h2>Subject-wise Student Summary</h2>

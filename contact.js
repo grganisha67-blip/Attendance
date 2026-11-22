@@ -39,7 +39,7 @@ form.addEventListener("submit", async function(e){
             alert(result.message);
         }
     } catch (error) {
-        alert("Server error! Make sure XAMPP is running.");
+        alert("Server error! Make sure WAMP is running.");
     }
 
 });

@@ -3,7 +3,6 @@ if (localStorage.getItem("user_role") !== "student") {
     window.location.href = "login.html";
 }
 
-
 let allAttendanceHistory = [];
 
 // Page khulne bittikai login gareko student ko data tanne
@@ -20,10 +19,10 @@ window.addEventListener("DOMContentLoaded", async () => {
         const res = await fetch(`backend/get_student_attendance.php?student_id=${studentId}`);
         const data = await res.json();
 
-        // 1. Mathi ko Student Info dekhaune
+        // 1. Mathi ko Student Info dekhaune (Fixed: data.student.roll)
         if (data.student) {
             document.getElementById("student-info").innerHTML = 
-                `Student: <strong>${data.student.name}</strong> | Roll No: <strong>${data.student.id}</strong> | ${data.student.faculty} - ${data.student.semester}`;
+                `Student: <strong>${data.student.name}</strong> | Roll No: <strong>${data.student.roll}</strong> | ${data.student.faculty} - ${data.student.semester}`;
         }
 
         // 2. Subject Cards banaune
@@ -43,7 +42,7 @@ window.addEventListener("DOMContentLoaded", async () => {
                         <div class="progress-bg">
                             <div class="progress-fill ${lowClass}" style="width: ${sub.percentage}%;"></div>
                         </div>
-                        <span class="click-hint">Click to view details →</span>
+                        <span class="click-hint">Click to view details &rarr;</span>
                     </div>
                 `;
             });
