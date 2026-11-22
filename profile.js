@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-// Role anushar aafno dashboard ma firta pathaune
+
 function goBack() {
     const role = localStorage.getItem("user_role");
     if (role === "admin") window.location.href = "admin.html";

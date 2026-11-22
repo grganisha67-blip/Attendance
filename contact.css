@@ -11,7 +11,6 @@ body {
     line-height: 1.5;
 }
 
-/* Navigation (100% Exact Match with Home & About Page) */
 nav {
     background-color: #34495e;;
     padding: 0;
@@ -46,7 +45,7 @@ nav ul li a.active {
     color: #ffffff;
 }
 
-/* Compact & Balanced Contact Container */
+
 .container {
     max-width: 880px;
     margin: 35px auto;

@@ -5,7 +5,7 @@ if (localStorage.getItem("user_role") !== "student") {
 
 let allAttendanceHistory = [];
 
-// Page khulne bittikai login gareko student ko data tanne
+
 window.addEventListener("DOMContentLoaded", async () => {
     const studentId = localStorage.getItem("user_id");
 
@@ -19,13 +19,13 @@ window.addEventListener("DOMContentLoaded", async () => {
         const res = await fetch(`backend/get_student_attendance.php?student_id=${studentId}`);
         const data = await res.json();
 
-        // 1. Mathi ko Student Info dekhaune (Fixed: data.student.roll)
+        
         if (data.student) {
             document.getElementById("student-info").innerHTML = 
                 `Student: <strong>${data.student.name}</strong> | Roll No: <strong>${data.student.roll}</strong> | ${data.student.faculty} - ${data.student.semester}`;
         }
 
-        // 2. Subject Cards banaune
+        
         const grid = document.getElementById("subject-cards-grid");
         grid.innerHTML = "";
 
@@ -48,7 +48,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             });
         }
 
-        // 3. All Subjects Table bharne
+      
         allAttendanceHistory = data.history;
         const allBody = document.getElementById("all-subjects-body");
         allBody.innerHTML = "";
@@ -70,7 +70,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-// Sidebar Tab change garne
+
 function openStudentTab(tabId, element) {
     document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
     document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
@@ -80,7 +80,6 @@ function openStudentTab(tabId, element) {
     if (element) element.classList.add('active');
 }
 
-// Subject Card click garda tyahi subject ko history dekhaune
 function showSubjectDetails(subjectName, cardElement) {
     document.querySelectorAll('.subject-card').forEach(c => c.style.borderColor = "");
     if (cardElement) cardElement.style.borderColor = "#2563eb";

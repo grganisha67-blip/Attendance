@@ -117,7 +117,7 @@ function switchAttendanceMode(mode) {
 }
 
 
-// 5. Ledger ma assign vayeka students ra selected date ko saved attendance tanne
+
 async function loadStudents(ledgerId) {
     const tbody = document.getElementById("student-list-body");
     const date = document.getElementById("att-date").value;
@@ -156,7 +156,7 @@ async function loadStudents(ledgerId) {
         tbody.innerHTML = `<tr><td colspan='3'>Error loading students.</td></tr>`;
     }
 }
-// 6. Attendance Submit / Update garne
+
 document.getElementById("attendanceForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
@@ -198,7 +198,7 @@ document.getElementById("attendanceForm").addEventListener("submit", async funct
     }
 });
 
-// 7. Teacher le Subject ko naam matra sachyaune function
+
 async function editTeacherSubject(oldName) {
     const newName = prompt("Edit Subject Name:", oldName);
     if (!newName || newName.trim() === "" || newName.trim() === oldName) return;
@@ -249,7 +249,6 @@ async function loadReport() {
     }
 }
 
-// 9. Profile Modal, Logout & PDF Download
 async function openProfile() {
     const userId = localStorage.getItem("user_id");
     if (!userId) return alert("Please login first!");

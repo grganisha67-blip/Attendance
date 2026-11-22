@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 1. Dashboard Cards Security Check (Admin, Teacher, Student)
     const cardLinks = document.querySelectorAll(".cards a");
 
     cardLinks.forEach(function (link) {
